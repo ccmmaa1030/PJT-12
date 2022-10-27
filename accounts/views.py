@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
 def signup(request):
     if request.method == 'POST':
@@ -31,6 +32,14 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('index')
+
+def detail(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    context = {
+        'user': user
+    }
+    return render(request, 'accounts/detail.html', context)

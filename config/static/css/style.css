@@ -12,6 +12,16 @@ body {
   background-color: #FEDFB0;
 }
 
+a {
+  text-decoration: none !important;
+  color: #403E39;
+}
+
+a:hover {
+  text-decoration: none !important;
+  color: #403E39;
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -54,4 +64,8 @@ body {
 
 .color-4 {
   background-color: #DC6C61;
+}
+
+.color-5 {
+  background-color: #FEDFB0;
 }

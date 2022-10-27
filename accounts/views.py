@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 def signup(request):
     if request.method == 'POST':
@@ -43,3 +44,15 @@ def detail(request, user_pk):
         'user': user
     }
     return render(request, 'accounts/detail.html', context)
+
+@login_required
+def follow(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.user == user:
+        messages.warning(request, '스스로를 팔로우 할 수 없습니다.')
+        return redirect('accounts:detail', user_pk)
+    if request.user in user.followers.all():
+        user.followers.remove(request.user)
+    else:
+        user.followers.add(request.user)
+    return redirect('accounts:detail', user_pk)

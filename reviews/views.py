@@ -54,3 +54,9 @@ def update(request, review_pk):
     else:
         messages.warning(request, '작성자만 수정할 수 있습니다.')
         return redirect('reviews:detail', review.pk)
+
+@login_required
+def delete(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    review.delete()
+    return redirect('reviews:index')

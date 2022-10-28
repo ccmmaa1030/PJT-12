@@ -109,6 +109,8 @@
                   {{ review.title }}
                 </a>
               </div>
+              {% empty %}
+              <p class="text-center my-1 text-muted">Nothing Here...</p>
             {% endfor %}
           </div>
           <div class="card-footer color-3"></div>

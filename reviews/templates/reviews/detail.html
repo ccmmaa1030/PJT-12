@@ -4,7 +4,7 @@
 {% block content %}
   <main class="container bg-white bd p-0">
     {% include 'header.html' %}
-    <div class="box p-4 p-md-5 m-4 ">
+    <div class="box p-4 p-md-5 m-4 mb-0">
       <h1 class="text-center">
         No.{{ review.pk }}
         :
@@ -56,8 +56,8 @@
             {{ review.like_users.count }}
           </p>
           {% if request.user == review.user %}
-            <a class="btn min-btn color-1 bd m-1 px-3" href="{% url 'reviews:update' review.pk %}">Edit</a>
-            <a class="btn min-btn color-2 bd m-1 px-3" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+            <a class="btn btn-sm min-btn color-1 bd m-1 px-3" href="{% url 'reviews:update' review.pk %}">Edit</a>
+            <a class="btn btn-sm min-btn color-2 bd m-1 px-3" href="{% url 'reviews:delete' review.pk %}">Delete</a>
           {% endif %}
         {% else %}
           <p class="fs-3 lh-2 m-1 px-3">
@@ -66,6 +66,15 @@
           </p>
         {% endif %}
       </div>
+    </div>
+    <div class="box px-4 px-md-5 m-4 mt-0">
+      <form class="w-100" action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <div class="w-100 d-flex justify-content-end">
+          <input class="btn btn-sm color-1 bd m-1 px-3" type="submit" value="Enter">
+        </div>
+      </form>
     </div>
   </main>
 {% endblock %}

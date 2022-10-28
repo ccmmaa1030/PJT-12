@@ -71,5 +71,28 @@
         </div>
       </div>
     </div>
+    <div class="row my-4">
+      <div class="col-4">
+        <div class="card text-center bd">
+          <div class="card-header color-3">
+            <p class="card-title text-center m-0">
+              {{ user.review_set.count }}
+              REVIEWS
+            </p>
+          </div>
+          <div class="card-body bd-body text-start">
+            {% for review in user.review_set.all %}
+              <div class="w-100 my-1">
+                <a class="text-dark my-1" href="{% url 'reviews:detail' review.pk %}">
+                  No.{{ review.pk }}
+                  {{ review.title }}
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="card-footer color-3"></div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

@@ -39,6 +39,12 @@ a:hover {
   border-width: 3px;
 }
 
+.bd-body {
+  border-top: solid #403E39;
+  border-bottom: solid #403E39;
+  border-width: 3px;
+}
+
 .bd-bottom {
   border-bottom: solid #403E39;
   border-width: 3px;

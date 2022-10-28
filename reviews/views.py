@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ReviewForm
 from .models import Review
+from django.contrib import messages
 
 @login_required
 def create(request):
@@ -34,3 +35,22 @@ def detail(request, review_pk):
         'review': review
     }
     return render(request, 'reviews/detail.html', context)
+
+@login_required
+def update(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.user == review.user: 
+        if request.method == 'POST':
+            review_form = ReviewForm(request.POST, request.FILES, instance=review)
+            if review_form.is_valid():
+                review_form.save()
+                return redirect('reviews:detail', review.pk)
+        else:
+            review_form = ReviewForm(instance=review)
+        context = {
+            'review_form': review_form
+        }
+        return render(request, 'reviews/form.html', context)
+    else:
+        messages.warning(request, '작성자만 수정할 수 있습니다.')
+        return redirect('reviews:detail', review.pk)

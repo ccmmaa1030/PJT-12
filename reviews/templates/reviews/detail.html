@@ -46,7 +46,7 @@
       <div class="w-100 d-flex justify-content-end">
         {% if request.user.is_authenticated %}
           {% if request.user == review.user %}
-            <a class="btn min-btn color-1 bd m-1 px-3" href="">Edit</a>
+            <a class="btn min-btn color-1 bd m-1 px-3" href="{% url 'reviews:update' review.pk %}">Edit</a>
             <a class="btn min-btn color-2 bd m-1 px-3" href="">Delete</a>
           {% endif %}
         {% endif %}

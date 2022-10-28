@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ReviewForm
+from .models import Review
 
 @login_required
 def create(request):
@@ -18,6 +20,10 @@ def create(request):
     }
     return render(request, 'reviews/form.html', context=context)
 
+@require_safe
 def index(request):
-
-    return render(request, 'reviews/index.html')
+    reviews = Review.objects.order_by('-pk')
+    context = {
+        'reviews': reviews
+    }
+    return render(request, 'reviews/index.html', context)

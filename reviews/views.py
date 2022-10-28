@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ReviewForm
@@ -27,3 +27,10 @@ def index(request):
         'reviews': reviews
     }
     return render(request, 'reviews/index.html', context)
+
+def detail(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    context = {
+        'review': review
+    }
+    return render(request, 'reviews/detail.html', context)

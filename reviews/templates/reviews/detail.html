@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <main class="container bg-white bd p-0">
+    {% include 'header.html' %}
+    <div class="box p-4 p-md-5 m-4 ">
+      <h1 class="text-center">
+        No.{{ review.pk }}
+        :
+        {{ review.title }}
+      </h1>
+      <h5 class="w-100 text-end">
+        <a href="{% url 'accounts:detail' review.user.pk %}">
+          {{ review.user.username }}
+        </a>
+      </h5>
+      <div class="w-100">
+        <div class="row">
+          <div class="col-5">
+            <img class="w-100 rounded bd" src="{{ review.image.url }}" alt="{{ review.image }}">
+          </div>
+          <div class="col-7 my-auto">
+            <dl class="row">
+              <dt class=" col-sm-3 text-center">title</dt>
+              <dd class="col-sm-9">{{ review.title }}</dd>
+              <dt class=" col-sm-3 text-center">cafe_name</dt>
+              <dd class="col-sm-9">{{ review.cafe_name }}</dd>
+              <dt class=" col-sm-3 text-center">grade</dt>
+              <dd class="col-sm-9">
+                {{ review.get_grade_display }}
+                {{ review.grade }}
+              </dd>
+              <dt class="col-sm-3 text-center">content</dt>
+              <dd class="col-sm-9">{{ review.content }}</dd>
+              <dt class=" col-sm-3 text-center">username</dt>
+              <dd class="col-sm-9">{{ review.user.username }}</dd>
+              <dt class="col-sm-3 text-center">created_at</dt>
+              <dd class="col-sm-9">{{ review.created_at | date:"Y-m-d" }}</dd>
+              <dt class="col-sm-3 text-center">updated_at</dt>
+              <dd class="col-sm-9">{{ review.updated_at | date:"Y-m-d" }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="w-100 d-flex justify-content-end">
+        {% if request.user.is_authenticated %}
+          {% if request.user == review.user %}
+            <a class="btn min-btn color-1 bd m-1 px-3" href="">Edit</a>
+            <a class="btn min-btn color-2 bd m-1 px-3" href="">Delete</a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </main>
+{% endblock %}

@@ -60,3 +60,12 @@ def delete(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
     return redirect('reviews:index')
+
+@login_required
+def like(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.user in review.like_users.all():
+        review.like_users.remove(request.user)
+    else:
+        review.like_users.add(request.user)
+    return redirect('reviews:detail', review_pk)

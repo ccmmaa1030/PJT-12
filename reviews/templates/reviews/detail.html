@@ -45,10 +45,25 @@
       </div>
       <div class="w-100 d-flex justify-content-end">
         {% if request.user.is_authenticated %}
+          <p class="fs-3 lh-2 m-1 px-3">
+            <a href="{% url 'reviews:like' review.pk %}">
+              {% if request.user in review.like_users.all %}
+                <i class="bi bi-heart-fill text-danger"></i>
+              {% else %}
+                <i class="bi bi-heart text-danger"></i>
+              {% endif %}
+            </a>
+            {{ review.like_users.count }}
+          </p>
           {% if request.user == review.user %}
             <a class="btn min-btn color-1 bd m-1 px-3" href="{% url 'reviews:update' review.pk %}">Edit</a>
             <a class="btn min-btn color-2 bd m-1 px-3" href="{% url 'reviews:delete' review.pk %}">Delete</a>
           {% endif %}
+        {% else %}
+          <p class="fs-3 lh-2 m-1 px-3">
+            <i class="bi bi-heart-fill text-danger"></i>
+            {{ review.like_users.count }}
+          </p>
         {% endif %}
       </div>
     </div>
